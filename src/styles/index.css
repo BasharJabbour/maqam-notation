@@ -1,0 +1,556 @@
+/* ============================================================
+   MAQAM NOTATION — Global Styles
+   ============================================================ */
+
+:root {
+  --ink: #1a1511;
+  --parchment: #f7f3eb;
+  --parchment-dark: #efe8da;
+  --gold: #c4943a;
+  --gold-dim: #a07a2e;
+  --gold-glow: #e8c36a;
+  --rust: #8b4513;
+  --staff-line: #3a342c;
+  --accent-blue: #2c4a6e;
+  --muted: #8a8078;
+  --shadow: rgba(26, 21, 17, 0.08);
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--parchment);
+  color: var(--ink);
+  font-family: 'DM Sans', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Subtle paper texture overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+}
+
+.app {
+  position: relative;
+  z-index: 1;
+}
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+
+header {
+  text-align: center;
+  padding: 48px 24px 32px;
+  border-bottom: 1px solid rgba(196, 148, 58, 0.2);
+}
+
+header h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-size: 3.2rem;
+  letter-spacing: 0.08em;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+
+header h1 span.arabic {
+  font-family: 'Noto Naskh Arabic', serif;
+  font-weight: 400;
+  font-size: 2.6rem;
+  color: var(--gold-dim);
+  margin-left: 12px;
+}
+
+header .subtitle {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--muted);
+  letter-spacing: 0.12em;
+  text-transform: lowercase;
+}
+
+/* ============================================================
+   MAIN LAYOUT
+   ============================================================ */
+
+.main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 24px 80px;
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 48px;
+}
+
+@media (max-width: 900px) {
+  .main {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+}
+
+/* ============================================================
+   PANELS
+   ============================================================ */
+
+.panel {
+  background: white;
+  border: 1px solid rgba(196, 148, 58, 0.15);
+  border-radius: 2px;
+  box-shadow: 0 2px 20px var(--shadow);
+}
+
+.panel-header {
+  padding: 20px 24px 16px;
+  border-bottom: 1px solid var(--parchment-dark);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.panel-header h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 400;
+  font-size: 1.3rem;
+  letter-spacing: 0.04em;
+}
+
+.panel-header .ornament {
+  color: var(--gold);
+  font-size: 0.9rem;
+}
+
+.panel-body {
+  padding: 24px;
+}
+
+/* ============================================================
+   KEY BUILDER — LEFT PANEL
+   ============================================================ */
+
+.key-builder {
+  position: sticky;
+  top: 24px;
+}
+
+/* Tonic */
+
+.tonic-section {
+  margin-bottom: 24px;
+}
+
+.tonic-row {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.tonic-btn {
+  padding: 6px 14px;
+  background: var(--parchment);
+  border: 1px solid transparent;
+  border-radius: 2px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.05rem;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.tonic-btn:hover {
+  border-color: var(--gold);
+}
+
+.tonic-btn.active {
+  background: var(--ink);
+  color: var(--parchment);
+}
+
+/* Presets */
+
+.preset-section {
+  margin-bottom: 28px;
+}
+
+.section-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+
+.preset-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+
+.preset-btn {
+  background: var(--parchment);
+  border: 1px solid transparent;
+  border-radius: 2px;
+  padding: 8px 12px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 400;
+  color: var(--ink);
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: left;
+}
+
+.preset-btn:hover {
+  border-color: var(--gold);
+  background: white;
+}
+
+.preset-btn.active {
+  background: var(--ink);
+  color: var(--parchment);
+  border-color: var(--ink);
+}
+
+.preset-btn .arabic-name {
+  font-family: 'Noto Naskh Arabic', serif;
+  font-size: 0.78rem;
+  color: var(--muted);
+  display: block;
+  margin-top: 1px;
+}
+
+.preset-btn.active .arabic-name {
+  color: var(--gold-glow);
+}
+
+/* Custom accidentals */
+
+.custom-key-section {
+  margin-top: 28px;
+}
+
+.note-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--parchment-dark);
+}
+
+.note-row:last-child {
+  border-bottom: none;
+}
+
+.note-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  width: 28px;
+  text-align: center;
+}
+
+.accidental-options {
+  display: flex;
+  gap: 3px;
+  flex: 1;
+}
+
+.acc-btn {
+  width: 36px;
+  height: 32px;
+  border: 1px solid var(--parchment-dark);
+  background: white;
+  border-radius: 2px;
+  cursor: pointer;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+  color: var(--ink);
+  font-family: 'DM Sans', sans-serif;
+}
+
+.acc-btn:hover {
+  border-color: var(--gold);
+  background: var(--parchment);
+}
+
+.acc-btn.active {
+  background: var(--gold);
+  color: white;
+  border-color: var(--gold-dim);
+}
+
+.acc-btn .acc-symbol {
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+/* Actions */
+
+.actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.action-btn {
+  flex: 1;
+  padding: 10px 16px;
+  border: 1px solid var(--ink);
+  background: transparent;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: all 0.15s;
+  border-radius: 2px;
+}
+
+.action-btn:hover {
+  background: var(--ink);
+  color: var(--parchment);
+}
+
+.action-btn.primary {
+  background: var(--ink);
+  color: var(--parchment);
+}
+
+.action-btn.primary:hover {
+  background: var(--gold-dim);
+  border-color: var(--gold-dim);
+}
+
+/* ============================================================
+   MUSIC SHEET — RIGHT PANEL
+   ============================================================ */
+
+.sheet-panel {
+  min-height: 500px;
+}
+
+.sheet-container {
+  padding: 32px;
+  overflow-x: auto;
+}
+
+.sheet-title-area {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.sheet-maqam-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2rem;
+  font-weight: 300;
+  letter-spacing: 0.06em;
+}
+
+.sheet-maqam-arabic {
+  font-family: 'Noto Naskh Arabic', serif;
+  font-size: 1.6rem;
+  color: var(--gold-dim);
+  margin-top: 4px;
+}
+
+.sheet-meta {
+  font-size: 0.78rem;
+  color: var(--muted);
+  margin-top: 8px;
+  letter-spacing: 0.06em;
+}
+
+svg.staff {
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+}
+
+.note-highlight {
+  transition: fill 0.2s;
+}
+
+.note-highlight:hover {
+  fill: var(--gold) !important;
+  cursor: pointer;
+}
+
+/* Intervals */
+
+.intervals-display {
+  display: flex;
+  gap: 4px;
+  justify-content: center;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+
+.interval-chip {
+  padding: 3px 10px;
+  background: white;
+  border: 1px solid var(--parchment-dark);
+  border-radius: 2px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.75rem;
+  color: var(--ink);
+}
+
+.interval-chip.quarter {
+  background: var(--gold);
+  color: white;
+  border-color: var(--gold-dim);
+}
+
+/* Jins */
+
+.jins-display {
+  margin-top: 20px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.jins-label {
+  font-size: 0.7rem;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.jins-tag {
+  padding: 4px 12px;
+  background: var(--parchment);
+  border: 1px solid var(--parchment-dark);
+  border-radius: 2px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+/* Play */
+
+.play-section {
+  text-align: center;
+  margin-top: 24px;
+}
+
+.play-btn {
+  padding: 10px 32px;
+  background: var(--gold);
+  border: none;
+  color: white;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: all 0.2s;
+}
+
+.play-btn:hover {
+  background: var(--gold-dim);
+}
+
+.play-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Notation style toggle */
+
+.notation-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+.toggle-btn {
+  padding: 5px 14px;
+  background: white;
+  border: 1px solid var(--parchment-dark);
+  border-radius: 2px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.78rem;
+  cursor: pointer;
+  transition: all 0.15s;
+  color: var(--ink);
+}
+
+.toggle-btn:hover {
+  border-color: var(--gold);
+}
+
+.toggle-btn.active {
+  background: var(--ink);
+  color: var(--parchment);
+  border-color: var(--ink);
+}
+
+/* Info bar */
+
+.info-bar {
+  margin-top: 20px;
+  padding: 16px 20px;
+  background: var(--parchment);
+  border-radius: 2px;
+  font-size: 0.8rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.info-bar strong {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.qt-symbol {
+  color: var(--rust);
+  font-size: 1.1em;
+}
+
+.qt-highlight {
+  color: var(--rust);
+  font-weight: 600;
+}
+
+/* ============================================================
+   ANIMATION
+   ============================================================ */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.4s ease-out forwards;
+}
