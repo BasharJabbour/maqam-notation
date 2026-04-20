@@ -50,17 +50,6 @@ function AccidentalGlyph({ acc, x, y, scale = 1, notationStyle = 'symbol' }) {
     </>
   );
 
-  // +/− suffix text helper
-  const suffixText = (suffix, color) => (
-    <text
-      x="10" y="4"
-      fontSize="13" fontFamily="'DM Sans', sans-serif" fontWeight="700"
-      fill={color}
-    >
-      {suffix}
-    </text>
-  );
-
   // ── Symbol-style glyphs ──────────────────────────────────
   const symbolGlyphs = {
     [ACC.FLAT]: (
@@ -103,39 +92,7 @@ function AccidentalGlyph({ acc, x, y, scale = 1, notationStyle = 'symbol' }) {
     ),
   };
 
-  // ── Plus/minus-style glyphs ──────────────────────────────
-  // Standard ♭/♯ drawn with a +/− appended
-  const plusminusGlyphs = {
-    [ACC.FLAT]: symbolGlyphs[ACC.FLAT],
-    [ACC.SHARP]: symbolGlyphs[ACC.SHARP],
-    [ACC.HALF_FLAT]: (
-      <g transform={`translate(${x},${y}) scale(${scale})`}>
-        {flatPath(micro)}
-        {suffixText('−', micro)}
-      </g>
-    ),
-    [ACC.HALF_SHARP]: (
-      <g transform={`translate(${x},${y}) scale(${scale})`}>
-        {sharpLines(micro)}
-        {suffixText('+', micro)}
-      </g>
-    ),
-    [ACC.THREE_Q_FLAT]: (
-      <g transform={`translate(${x},${y}) scale(${scale})`}>
-        {flatPath(micro)}
-        {suffixText('+', micro)}
-      </g>
-    ),
-    [ACC.THREE_Q_SHARP]: (
-      <g transform={`translate(${x},${y}) scale(${scale})`}>
-        {sharpLines(micro)}
-        {suffixText('++', micro)}
-      </g>
-    ),
-  };
-
-  const glyphs = notationStyle === NOTATION_STYLES.plusminus ? plusminusGlyphs : symbolGlyphs;
-  return glyphs[acc] || null;
+  return symbolGlyphs[acc] || null;
 }
 
 export default function StaffSVG({ notes, accidentals, notationStyle = 'symbol' }) {

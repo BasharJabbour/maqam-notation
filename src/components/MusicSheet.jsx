@@ -21,11 +21,9 @@ export default function MusicSheet({
   const intervals = getIntervals(notes);
   const maqamData = MAQAMAT[selectedMaqam];
 
-  const displayName = isCustom ? 'Custom Key' : selectedMaqam;
-  const displayArabic = isCustom
-    ? 'مفتاح مخصص'
-    : maqamData?.arabic || '';
-  const jins = isCustom ? [] : maqamData?.jins || [];
+  const displayName = 'Key Signature Key'
+  const displayArabic = 'دليل المقام'
+   
 
   return (
     <div className="sheet-area">
@@ -34,9 +32,7 @@ export default function MusicSheet({
           {/* Title */}
           <div className="sheet-title-area">
             <div className="sheet-maqam-name">{displayName}</div>
-            {displayArabic && (
-              <div className="sheet-maqam-arabic">{displayArabic}</div>
-            )}
+            <div className="sheet-maqam-arabic">{displayArabic}</div>
             <div className="sheet-meta">
               Tonic: {tonic} · {notes.length} notes · 24-TET
             </div>
@@ -78,17 +74,6 @@ export default function MusicSheet({
             ))}
           </div>
 
-          {/* Ajnas tags */}
-          {jins.length > 0 && (
-            <div className="jins-display">
-              <span className="jins-label">Ajnas:</span>
-              {jins.map((j, i) => (
-                <div key={i} className="jins-tag">
-                  {j}
-                </div>
-              ))}
-            </div>
-          )}
 
           {/* Play button */}
           <div className="play-section">

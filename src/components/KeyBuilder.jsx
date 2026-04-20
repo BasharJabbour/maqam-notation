@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  ACC,
   ACC_LABELS,
   NOTES,
   MAQAMAT,
@@ -10,9 +9,6 @@ import {
 export default function KeyBuilder({
   tonic,
   accidentals,
-  selectedMaqam,
-  isCustom,
-  onSelectMaqam,
   onSelectTonic,
   onSetAccidental,
   onReset,
@@ -37,23 +33,6 @@ export default function KeyBuilder({
                   onClick={() => onSelectTonic(n)}
                 >
                   {n}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Maqam presets */}
-          <div className="preset-section">
-            <div className="section-label">Maqam Presets</div>
-            <div className="preset-grid">
-              {Object.entries(MAQAMAT).map(([name, data]) => (
-                <button
-                  key={name}
-                  className={`preset-btn ${!isCustom && selectedMaqam === name ? 'active' : ''}`}
-                  onClick={() => onSelectMaqam(name)}
-                >
-                  {name}
-                  <span className="arabic-name">{data.arabic}</span>
                 </button>
               ))}
             </div>
