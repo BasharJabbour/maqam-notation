@@ -2,7 +2,6 @@ import React from 'react';
 import {
   ACC_LABELS,
   NOTES,
-  MAQAMAT,
   EDITABLE_ACCIDENTALS,
 } from '../lib/maqam-data';
 

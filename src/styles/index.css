@@ -477,38 +477,6 @@ svg.staff {
   cursor: not-allowed;
 }
 
-/* Notation style toggle */
-
-.notation-toggle {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  justify-content: center;
-  margin-top: 16px;
-}
-
-.toggle-btn {
-  padding: 5px 14px;
-  background: white;
-  border: 1px solid var(--parchment-dark);
-  border-radius: 2px;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.78rem;
-  cursor: pointer;
-  transition: all 0.15s;
-  color: var(--ink);
-}
-
-.toggle-btn:hover {
-  border-color: var(--gold);
-}
-
-.toggle-btn.active {
-  background: var(--ink);
-  color: var(--parchment);
-  border-color: var(--ink);
-}
-
 /* Info bar */
 
 .info-bar {

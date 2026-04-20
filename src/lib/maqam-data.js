@@ -26,14 +26,6 @@ export const ACC_LABELS = {
   [ACC.THREE_Q_SHARP]: '¾♯',
 };
 
-// Two notation styles for quarter-tone accidentals:
-//   'symbol' — uses dedicated glyphs (slashed flat, single-stroke sharp, etc.)
-//   'plusminus' — appends +/- to standard sharp/flat (♯+, ♭-, etc.)
-export const NOTATION_STYLES = {
-  symbol: 'symbol',
-  plusminus: 'plusminus',
-};
-
 // Short labels shown beneath notes on the staff
 export const ACC_SHORT_SYMBOL = {
   [ACC.NATURAL]: '',
@@ -44,22 +36,6 @@ export const ACC_SHORT_SYMBOL = {
   [ACC.THREE_Q_FLAT]: '¾♭',
   [ACC.THREE_Q_SHARP]: '¾♯',
 };
-
-export const ACC_SHORT_PLUSMINUS = {
-  [ACC.NATURAL]: '',
-  [ACC.FLAT]: '♭',
-  [ACC.SHARP]: '♯',
-  [ACC.HALF_FLAT]: '♭−',
-  [ACC.HALF_SHARP]: '♯+',
-  [ACC.THREE_Q_FLAT]: '♭+',
-  [ACC.THREE_Q_SHARP]: '♯++',
-};
-
-export function getAccShort(style) {
-  return style === NOTATION_STYLES.plusminus
-    ? ACC_SHORT_PLUSMINUS
-    : ACC_SHORT_SYMBOL;
-}
 
 // Offset in quarter-tone steps from natural
 export const ACC_OFFSET = {
@@ -99,3 +75,12 @@ export const EDITABLE_ACCIDENTALS = [
   ACC.HALF_SHARP,
   ACC.SHARP,
 ];
+
+/** Letter-name map with every degree natural — default key state. */
+export function naturalAccidentals() {
+  const acc = {};
+  NOTES.forEach((n) => {
+    acc[n] = ACC.NATURAL;
+  });
+  return acc;
+}

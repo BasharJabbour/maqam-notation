@@ -5,21 +5,14 @@ import {
   intervalLabel,
   isQuarterToneInterval,
 } from '../lib/music-theory';
-import { MAQAMAT, NOTATION_STYLES } from '../lib/maqam-data';
-
 export default function MusicSheet({
   notes,
   accidentals,
-  selectedMaqam,
-  isCustom,
   tonic,
   isPlaying,
   onPlay,
-  notationStyle,
-  onToggleNotation,
 }) {
   const intervals = getIntervals(notes);
-  const maqamData = MAQAMAT[selectedMaqam];
 
   const displayName = 'Key Signature Key'
   const displayArabic = 'دليل المقام'
@@ -39,24 +32,7 @@ export default function MusicSheet({
           </div>
 
           {/* Staff notation */}
-          <StaffSVG notes={notes} accidentals={accidentals} notationStyle={notationStyle} />
-
-          {/* Notation style toggle */}
-          <div className="notation-toggle">
-            <span className="section-label" style={{ marginBottom: 0 }}>Accidental style:</span>
-            <button
-              className={`toggle-btn ${notationStyle === NOTATION_STYLES.symbol ? 'active' : ''}`}
-              onClick={() => onToggleNotation(NOTATION_STYLES.symbol)}
-            >
-              Symbols
-            </button>
-            <button
-              className={`toggle-btn ${notationStyle === NOTATION_STYLES.plusminus ? 'active' : ''}`}
-              onClick={() => onToggleNotation(NOTATION_STYLES.plusminus)}
-            >
-              ♯+ / ♭−
-            </button>
-          </div>
+          <StaffSVG notes={notes} accidentals={accidentals} />
 
           {/* Interval chips */}
           <div className="intervals-display">

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ACC, NOTES, NOTATION_STYLES, getAccShort } from '../lib/maqam-data';
+import { ACC, NOTES, ACC_SHORT_SYMBOL } from '../lib/maqam-data';
 import { isMicrotonal } from '../lib/music-theory';
 
 const STAFF_TOP = 80;
@@ -20,15 +20,10 @@ function noteY(name, octave) {
 }
 
 /**
- * SVG path-based accidental glyphs.
- * We draw these manually instead of relying on Unicode because the musical
- * quarter-tone symbols (U+1D132, U+1D133) are missing from most system fonts.
- *
- * Two styles are supported:
- *   'symbol'    — dedicated glyphs (slashed flat, single-stroke sharp, etc.)
- *   'plusminus'  — standard ♭/♯ with a +/− suffix
+ * SVG path-based accidental glyphs (dedicated quarter-tone shapes).
+ * Drawn manually because U+1D132 / U+1D133 are missing from most system fonts.
  */
-function AccidentalGlyph({ acc, x, y, scale = 1, notationStyle = 'symbol' }) {
+function AccidentalGlyph({ acc, x, y, scale = 1 }) {
   const ink = '#1a1511';
   const micro = '#8b4513';
 
@@ -95,7 +90,7 @@ function AccidentalGlyph({ acc, x, y, scale = 1, notationStyle = 'symbol' }) {
   return symbolGlyphs[acc] || null;
 }
 
-export default function StaffSVG({ notes, accidentals, notationStyle = 'symbol' }) {
+export default function StaffSVG({ notes, accidentals }) {
   // Collect non-natural key signature accidentals
   const keyAccidentals = NOTES.filter((n) => accidentals[n] !== ACC.NATURAL).map(
     (n) => ({ note: n, acc: accidentals[n] }),
@@ -114,7 +109,7 @@ export default function StaffSVG({ notes, accidentals, notationStyle = 'symbol' 
   const keySigElements = keyAccidentals.map((ka, i) => {
     const x = keySigX + i * 20;
     return (
-      <AccidentalGlyph key={`ks-${i}`} acc={ka.acc} x={x} y={keySigY(ka.note)} notationStyle={notationStyle} />
+      <AccidentalGlyph key={`ks-${i}`} acc={ka.acc} x={x} y={keySigY(ka.note)} />
     );
   });
 
@@ -210,8 +205,7 @@ export default function StaffSVG({ notes, accidentals, notationStyle = 'symbol' 
           }
         }
 
-        const accShort = getAccShort(notationStyle);
-        const displayName = note.name + accShort[note.accidental];
+        const displayName = note.name + ACC_SHORT_SYMBOL[note.accidental];
         const labelY = STAFF_TOP + LINE_GAP * 4 + 45;
 
         return (
@@ -252,7 +246,7 @@ export default function StaffSVG({ notes, accidentals, notationStyle = 'symbol' 
 
             {/* Inline accidental */}
             {note.accidental !== ACC.NATURAL && (
-              <AccidentalGlyph acc={note.accidental} x={x - 18} y={y} scale={0.85} notationStyle={notationStyle} />
+              <AccidentalGlyph acc={note.accidental} x={x - 18} y={y} scale={0.85} />
             )}
 
             {/* Note label */}
