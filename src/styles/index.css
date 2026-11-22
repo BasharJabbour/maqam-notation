@@ -89,18 +89,25 @@ header .subtitle {
    ============================================================ */
 
 .main {
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: 40px 24px 80px;
   display: grid;
-  grid-template-columns: 340px 1fr;
-  gap: 48px;
+  grid-template-columns: 360px 1fr;
+  gap: 32px;
+  align-items: start;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1100px) {
   .main {
     grid-template-columns: 1fr;
-    gap: 32px;
+  }
+}
+
+@media (max-width: 700px) {
+  .main {
+    grid-template-columns: 1fr;
+    gap: 24px;
   }
 }
 
@@ -298,8 +305,11 @@ header .subtitle {
 }
 
 .acc-btn .acc-symbol {
-  font-size: 1.1rem;
+  font-size: 1.45rem;
   line-height: 1;
+  transform: translateY(0.5px);
+  /* VexFlow accidentals are SMuFL glyphs (Bravura). */
+  font-family: Bravura, 'DM Sans', sans-serif;
 }
 
 /* Actions */
@@ -352,6 +362,16 @@ header .subtitle {
   overflow-x: auto;
 }
 
+@media (max-width: 700px) {
+  .sheet-container {
+    padding: 16px;
+  }
+}
+
+.staff-host {
+  width: 100%;
+}
+
 .sheet-title-area {
   text-align: center;
   margin-bottom: 32px;
@@ -381,7 +401,6 @@ header .subtitle {
 svg.staff {
   display: block;
   margin: 0 auto;
-  max-width: 100%;
 }
 
 .note-highlight {
@@ -521,4 +540,336 @@ svg.staff {
 
 .fade-in {
   animation: fadeIn 0.4s ease-out forwards;
+}
+
+/* ============================================================
+   SIDEBAR
+   ============================================================ */
+
+.sidebar {
+  position: sticky;
+  top: 24px;
+  background: white;
+  border: 1px solid rgba(196, 148, 58, 0.15);
+  border-radius: 2px;
+  box-shadow: 0 2px 20px var(--shadow);
+  padding: 18px 14px;
+}
+
+.sidebar-title {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 14px;
+  padding: 0 6px;
+}
+
+.sidebar-tabs {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sidebar-tab {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 10px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.15s;
+  font-family: 'DM Sans', sans-serif;
+  color: var(--ink);
+}
+
+.sidebar-tab:hover {
+  border-color: var(--gold);
+  background: var(--parchment);
+}
+
+.sidebar-tab.active {
+  background: var(--ink);
+  color: var(--parchment);
+  border-color: var(--ink);
+}
+
+.sidebar-tab-number {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--parchment-dark);
+  color: var(--ink);
+  font-size: 0.75rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidebar-tab.active .sidebar-tab-number {
+  background: var(--gold);
+  color: white;
+}
+
+.sidebar-tab-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.sidebar-tab-label {
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+
+.sidebar-tab-hint {
+  font-size: 0.7rem;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+}
+
+.sidebar-tab.active .sidebar-tab-hint {
+  color: var(--gold-glow);
+}
+
+/* ============================================================
+   EDITOR AREA (generic wrapper for per-tab panels)
+   ============================================================ */
+
+.editor-area {
+  position: sticky;
+  top: 24px;
+}
+
+/* Browser-like editor tabs */
+
+.editor-tabs {
+  display: flex;
+  gap: 6px;
+  align-items: flex-end;
+  margin-bottom: -1px; /* visually connect active tab to panel border */
+}
+
+.editor-tab {
+  appearance: none;
+  border: 1px solid rgba(196, 148, 58, 0.25);
+  border-bottom-color: rgba(196, 148, 58, 0.15);
+  background: var(--parchment-dark);
+  color: var(--muted);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 10px 14px;
+  border-radius: 10px 10px 0 0;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.editor-tab:hover {
+  background: white;
+  color: var(--ink);
+  border-color: rgba(196, 148, 58, 0.35);
+}
+
+.editor-tab.active {
+  background: white;
+  color: var(--ink);
+  border-color: rgba(196, 148, 58, 0.25);
+  border-bottom-color: white; /* attach to panel */
+}
+
+/* ============================================================
+   TIME SIGNATURE EDITOR
+   ============================================================ */
+
+.time-preview {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.time-preview-fraction {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 400;
+  line-height: 1;
+  padding: 8px 16px;
+  border: 1px solid var(--parchment-dark);
+  border-radius: 2px;
+}
+
+.time-num,
+.time-den {
+  font-size: 2.2rem;
+}
+
+.time-num {
+  border-bottom: 2px solid var(--ink);
+  padding-bottom: 2px;
+  margin-bottom: 2px;
+}
+
+.time-presets {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+}
+
+.time-custom {
+  display: flex;
+  gap: 16px;
+}
+
+.time-field {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.time-field > span {
+  font-size: 0.7rem;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.time-field select {
+  padding: 8px 10px;
+  border: 1px solid var(--parchment-dark);
+  border-radius: 2px;
+  background: white;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.time-field select:focus {
+  outline: none;
+  border-color: var(--gold);
+}
+
+/* ============================================================
+   NOTES EDITOR
+   ============================================================ */
+
+.notes-rest-toggle {
+  margin-bottom: 20px;
+  padding: 10px 12px;
+  background: var(--parchment);
+  border-radius: 2px;
+  font-size: 0.85rem;
+}
+
+.notes-rest-toggle label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.notes-acc-row {
+  flex-wrap: wrap;
+}
+
+.notes-list {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--parchment-dark);
+}
+
+.notes-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.link-btn {
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  padding: 4px 2px;
+}
+
+.link-btn:hover {
+  color: var(--rust);
+}
+
+.notes-empty {
+  font-size: 0.85rem;
+  color: var(--muted);
+  font-style: italic;
+  padding: 12px 0;
+}
+
+.notes-list-items {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.notes-list-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  background: var(--parchment);
+  border-radius: 2px;
+  font-size: 0.85rem;
+}
+
+.notes-list-index {
+  flex-shrink: 0;
+  font-size: 0.7rem;
+  color: var(--muted);
+  font-weight: 600;
+  min-width: 20px;
+}
+
+.notes-list-label {
+  flex: 1;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1rem;
+  color: var(--ink);
+}
+
+.notes-list-remove {
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  font-size: 1.3rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0 4px;
+  border-radius: 2px;
+  transition: all 0.15s;
+}
+
+.notes-list-remove:hover {
+  color: var(--rust);
+  background: white;
 }

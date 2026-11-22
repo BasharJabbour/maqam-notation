@@ -1,70 +1,55 @@
 import React from 'react';
-import StaffSVG from './StaffSVG';
-import {
-  getIntervals,
-  intervalLabel,
-  isQuarterToneInterval,
-} from '../lib/music-theory';
+import StaffVex from './StaffVex';
+
 export default function MusicSheet({
-  notes,
-  accidentals,
   tonic,
+  accidentals,
+  timeSignature,
+  scoreNotes,
   isPlaying,
   onPlay,
+  onExport,
 }) {
-  const intervals = getIntervals(notes);
-
-  const displayName = 'Key Signature Key'
-  const displayArabic = 'دليل المقام'
-   
+  const { numerator, denominator } = timeSignature;
 
   return (
     <div className="sheet-area">
       <div className="panel sheet-panel">
         <div className="sheet-container fade-in">
-          {/* Title */}
           <div className="sheet-title-area">
-            <div className="sheet-maqam-name">{displayName}</div>
-            <div className="sheet-maqam-arabic">{displayArabic}</div>
+            <div className="sheet-maqam-name">Score</div>
+            <div className="sheet-maqam-arabic">مقطوعة</div>
             <div className="sheet-meta">
-              Tonic: {tonic} · {notes.length} notes · 24-TET
+              Tonic: {tonic} · {scoreNotes.length} note{scoreNotes.length === 1 ? '' : 's'} ·{' '}
+              {numerator}/{denominator} · 24-TET
             </div>
           </div>
 
-          {/* Staff notation */}
-          <StaffSVG notes={notes} accidentals={accidentals} />
+          <StaffVex
+            accidentals={accidentals}
+            timeSignature={timeSignature}
+            scoreNotes={scoreNotes}
+          />
 
-          {/* Interval chips */}
-          <div className="intervals-display">
-            {intervals.map((iv, i) => (
-              <React.Fragment key={i}>
-                <div
-                  className={`interval-chip ${isQuarterToneInterval(iv) ? 'quarter' : ''}`}
-                >
-                  {intervalLabel(iv)}T
-                </div>
-                {i < intervals.length - 1 && (
-                  <span style={{ color: '#ccc', fontSize: '0.7rem' }}>·</span>
-                )}
-              </React.Fragment>
-            ))}
-          </div>
-
-
-          {/* Play button */}
           <div className="play-section">
             <button
               className="play-btn"
               onClick={onPlay}
-              disabled={isPlaying}
+              disabled={isPlaying || scoreNotes.length === 0}
             >
-              {isPlaying ? '▶ Playing...' : '▶ Play Scale'}
+              {isPlaying ? '▶ Playing...' : '▶ Play Score'}
+            </button>
+            <button
+              className="action-btn"
+              onClick={onExport}
+              style={{ marginLeft: 8, padding: '10px 20px' }}
+            >
+              Export SVG
             </button>
           </div>
         </div>
       </div>
 
-      {/* Info bar */}
       <div className="info-bar">
         <strong>About quarter tones:</strong> Arabic music divides the octave
         into 24 equal parts instead of the Western 12. The half-flat (
