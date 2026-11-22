@@ -1,18 +1,26 @@
 # Maqam مقام — Arabic Music Notation
 
-A web app for creating and displaying custom key signatures that support Arabic maqam notation, including quarter-tone (microtonal) accidentals that standard Western music software doesn't handle well.
+A web app for scoring Arabic music, including the quarter-tone (microtonal)
+accidentals that standard Western notation software doesn't handle well. You
+build a custom key signature, pick a time signature, enter notes, and get a
+rendered staff you can hear and export.
 
 ![Maqam Notation](https://img.shields.io/badge/24--TET-Quarter%20Tones-c4943a)
 
 ## Features
 
-- **10 maqam presets** — Rast, Bayati, Hijaz, Nahawand, Saba, Sikah, Ajam, Kurd, Jiharkah, Huzam
-- **Custom key editor** — set any accidental (♮ ♭ ♯ 𝄳 𝄲) per note
-- **SVG staff rendering** — treble clef, key signature, note heads with stems and ledger lines
-- **Quarter-tone aware** — half-flat and half-sharp accidentals are visually distinguished in brown
-- **Interval display** — shows the step pattern with ¾-tone and 1¼-tone intervals highlighted
-- **Audio playback** — hear the scale in 24-TET tuning via Web Audio API
-- **SVG export** — download the rendered staff as an SVG file
+- **Custom key signatures** — set any accidental (♮ 𝄳 ♭ 𝄲 ♯) per letter name,
+  including microtonal ones, rendered directly into the staff's key signature.
+- **Time signatures** — common presets plus a custom beats / note-value picker.
+- **Note entry** — add notes (name · accidental · octave · duration) or rests
+  to build up a score, with a live editable list.
+- **VexFlow staff rendering** — treble clef, custom microtonal key signature,
+  and automatic multi-system line wrapping that re-packs as the score grows
+  (see `docs/staff-line-wrapping.md`).
+- **Quarter-tone aware** — half-flat / half-sharp (and three-quarter) accidentals
+  are visually distinguished in brown.
+- **Audio playback** — hear the score in 24-TET tuning via the Web Audio API.
+- **SVG export** — download the rendered staff as an SVG file.
 
 ## Quick Start
 
@@ -30,9 +38,11 @@ npm run build
 npm run preview
 ```
 
+Node version is pinned in `.nvmrc` (`nvm use`).
+
 ## Deploy to GitHub Pages
 
-1. Create a GitHub repo named `maqam-notation` (or update `base` in `vite.config.js`)
+1. Create a GitHub repo named `maqam-notation` (or update `base` in `vite.config.js`).
 
 2. Deploy:
 ```bash
@@ -49,27 +59,35 @@ If using a **custom domain**, set `base: '/'` in `vite.config.js`.
 
 ```
 maqam-notation/
-├── index.html                 # Entry point
-├── vite.config.js             # Vite + GitHub Pages config
+├── index.html                      # Entry point
+├── vite.config.js                  # Vite + GitHub Pages config
 ├── package.json
+├── docs/
+│   └── staff-line-wrapping.md      # How the multi-system layout works
 └── src/
-    ├── main.jsx               # React mount
-    ├── App.jsx                # Root component + state
+    ├── main.jsx                    # React mount
+    ├── App.jsx                     # Root component + state
     ├── components/
-    │   ├── KeyBuilder.jsx     # Left panel: tonic, presets, custom editor
-    │   ├── MusicSheet.jsx     # Right panel: title, staff, intervals, play
-    │   └── StaffSVG.jsx       # SVG staff renderer
+    │   ├── EditorTabs.jsx          # Key / Time / Notes tab bar
+    │   ├── KeyEditor.jsx           # Tonic + custom accidentals
+    │   ├── TimeSignatureEditor.jsx # Time signature presets + custom
+    │   ├── NotesEditor.jsx         # Note/rest entry + score list
+    │   ├── MusicSheet.jsx          # Staff panel, play + export
+    │   └── StaffVex.jsx            # VexFlow staff renderer + line packing
     ├── lib/
-    │   ├── maqam-data.js      # Constants, accidentals, maqam definitions
-    │   ├── music-theory.js    # Scale construction, intervals, frequencies
-    │   └── audio.js           # Web Audio API playback engine
+    │   ├── maqam-data.js           # Constants, accidental ↔ VexFlow mapping
+    │   ├── music-theory.js         # Quarter-tone positions & frequencies
+    │   └── audio.js                # Web Audio API playback engine
     └── styles/
-        └── index.css          # All styles
+        └── index.css              # All styles
 ```
 
 ## About Arabic Maqam Notation
 
-Arabic music uses a 24-tone equal temperament (24-TET) system, dividing the octave into 24 quarter-tone steps instead of the 12 semitones used in Western music. This allows for intervals like the ¾-tone (neutral second) that are fundamental to maqam melodies.
+Arabic music uses a 24-tone equal temperament (24-TET) system, dividing the
+octave into 24 quarter-tone steps instead of the 12 semitones used in Western
+music. This allows for intervals like the ¾-tone (neutral second) that are
+fundamental to maqam melodies.
 
 The key accidentals include:
 - **𝄳** Half-flat — lowers a note by a quarter tone
@@ -77,7 +95,8 @@ The key accidentals include:
 - **♭** Flat — lowers by a semitone (standard)
 - **♯** Sharp — raises by a semitone (standard)
 
-Most notation software doesn't natively support these microtonal accidentals in key signatures, which is the problem this app solves.
+Most notation software doesn't natively support these microtonal accidentals in
+key signatures, which is the problem this app solves.
 
 ## License
 
